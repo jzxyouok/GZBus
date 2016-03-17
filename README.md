@@ -1,7 +1,7 @@
-![iOS](https://img.shields.io/badge/平台-iOS-red.svg)
-![Language](https://img.shields.io/badge/语言-Swift 2.1-orange.svg)
-![Status](https://img.shields.io/badge/进度-40%-green.svg)
-![License](https://img.shields.io/badge/协议-MIT-blue.svg)
+![iOS](https://img.shields.io/badge/Platform-iOS-red.svg)
+![Language](https://img.shields.io/badge/Swift-2.1-orange.svg)
+![Status](https://img.shields.io/badge/Status -40% -green.svg)
+![License](https://img.shields.io/badge/License-MIT-blue.svg)
 
 #广州公交车查询
 
