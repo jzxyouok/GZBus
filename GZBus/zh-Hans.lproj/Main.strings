@@ -1,0 +1,24 @@
+
+/* Class = "UIViewController"; title = "Result"; ObjectID = "CdB-sq-neh"; */
+"CdB-sq-neh.title" = "Result";
+
+/* Class = "UIViewController"; title = "Main"; ObjectID = "ERE-kk-a9p"; */
+"ERE-kk-a9p.title" = "Main";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "GiC-Lx-r6L"; */
+"GiC-Lx-r6L.normalTitle" = "Button";
+
+/* Class = "UIViewController"; title = "Detail"; ObjectID = "HuX-uJ-6ot"; */
+"HuX-uJ-6ot.title" = "Detail";
+
+/* Class = "UINavigationController"; title = "Root"; ObjectID = "Pgp-qh-mLL"; */
+"Pgp-qh-mLL.title" = "Root";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "RgK-wE-PLB"; */
+"RgK-wE-PLB.text" = "Label";
+
+/* Class = "UINavigationItem"; title = "GZBus"; ObjectID = "a1t-5o-7HR"; */
+"a1t-5o-7HR.title" = "广州巴士";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "eL7-JZ-U1C"; */
+"eL7-JZ-U1C.text" = "Label";
