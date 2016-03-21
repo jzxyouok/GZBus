@@ -19,13 +19,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         
-        //Setup Notification
-        let notificationType: UIUserNotificationType = [.Sound, .Alert, .Badge]
-        let notificationSetting = UIUserNotificationSettings(forTypes: notificationType, categories: nil)
-        application.registerUserNotificationSettings(notificationSetting)
-        
-        //Background Fetch
-        application.setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalMinimum)
+//        //Setup Notification
+//        let notificationType: UIUserNotificationType = [.Sound, .Alert, .Badge]
+//        let notificationSetting = UIUserNotificationSettings(forTypes: notificationType, categories: nil)
+//        application.registerUserNotificationSettings(notificationSetting)
+//        
+//        //Background Fetch
+//        application.setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalMinimum)
         
         //NavigationBar Setting
         application.statusBarStyle = .LightContent
@@ -35,8 +35,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         //Fabric
         Fabric.with([Crashlytics.self, Answers.self])
-
-        Answers.logContentViewWithName("Open", contentType: "GZBus", contentId: nil, customAttributes: nil)
 
         return true
     }
@@ -57,10 +55,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidBecomeActive(application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        Answers.logContentViewWithName("Active", contentType: "GZBus", contentId: nil, customAttributes: nil)
+
     }
 
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
+    
 }
 

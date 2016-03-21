@@ -7,20 +7,34 @@
 //
 
 import UIKit
+import SwiftyJSON
 
 class MainViewController: UIViewController {
-    @IBOutlet weak var searchTextField: UITextField!
+    @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var indicatorView: UIActivityIndicatorView!
+    @IBOutlet weak var mainTableView: UITableView!
+    
+    private var http = HTTPUtils()
+    private var busList = Bus().busList
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
-        self.searchTextField.backgroundColor = UIColor(Hex: ColorUtil.navigationBar)
-        self.searchTextField.textColor = UIColor.whiteColor()
-                
-        let placeholder = NSAttributedString(string: "输入查询的线路", attributes: [NSForegroundColorAttributeName : UIColor.whiteColor()])
-        self.searchTextField.attributedPlaceholder = placeholder
-        self.searchTextField.delegate = self
+        UISetting()
+        http.delegate = self
+    }
+    
+    func UISetting() {
+        self.title = "巴士来嘅"
+        indicatorView.hidden = true
+        busList = []
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(named: "NavigationBarBackground"), forBarPosition: .Any, barMetrics: .Default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+
     }
     
     override func didReceiveMemoryWarning() {
@@ -32,41 +46,105 @@ class MainViewController: UIViewController {
     // MARK: - Navigation
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
+        // Get the new view controller using segue.destinåationViewController.
         // Pass the selected object to the new view controller.
-        if segue.identifier == "search" {
-            let vc = segue.destinationViewController as! ResultViewController
-            vc.searchBus = searchTextField.text
+        if segue.identifier == "showDetailSegue" {
+            let vc = segue.destinationViewController as! DetailViewController
+            vc.route = sender as! String
         }
     }
     
-    @IBAction func back(segue:UIStoryboardSegue) {
+    func startAnimating() {
+        indicatorView.hidden = false
+        indicatorView.startAnimating()
     }
     
-    // MARK: - Action
-    @IBAction func onSearchClick(sender: AnyObject) {
-        self.performSegueWithIdentifier("search", sender: nil)
+    func stopAnimating() {
+        indicatorView.stopAnimating()
+        indicatorView.hidden = true
+    }
+    
+    func alert(title: String, message: String?, handle:  ((UIAlertAction) -> Void)?) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        let cancelAction = UIAlertAction(title: "确定", style: .Cancel, handler: handle)
+        alertController.addAction(cancelAction)
+        self.presentViewController(alertController, animated: true, completion: nil)
+    }
+}
+
+extension MainViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        getData(searchBar.text!)
+        searchBar.resignFirstResponder()
+        startAnimating()
+    }
+    
+    func searchBar(searchBar: UISearchBar, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+        guard text != " " else {
+            return false
+        }
+        return true
+    }
+    
+    func getData(route: String) {
+        let parameters: [String: AnyObject] = [
+            "oper":"fuzzy",
+            "route": route
+        ]
+        http.get(parameters)
     }
 
 }
 
-extension MainViewController: UITextFieldDelegate {
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
-        let nextTage = textField.tag + 1
-        // Try to find next responder
-        let nextResponder = textField.superview?.viewWithTag(nextTage) as UIResponder!
+extension MainViewController: HTTPDelegate {
+    func didReceiveError(error: NSError) {
+        stopAnimating()
+        alert("网络连接错误", message: error.localizedDescription, handle: nil)
+    }
+    
+    func didReceiveResult(result: NSData) {
+        stopAnimating()
+        let json = JSON(data: result)
         
-        if (nextResponder != nil){
-            // Found next responder, so set it.
-            nextResponder?.becomeFirstResponder()
+        guard searchBar.text != "" else {
+            alert("缺少查找关键字", message: nil, handle: nil)
+            return
         }
-        else
-        {
-            // Not found, so remove keyboard
-            textField.resignFirstResponder()
-            self.performSegueWithIdentifier("search", sender: nil)
+        
+        guard json["c"].int == 0 else {
+            let title = json["err"]["msg"].stringValue
+            alert(title, message: nil, handle: nil)
+            return
         }
-        return false
+        
+        busList = json["d"]["result"].stringValue.characters.split(",").map(String.init)
+        self.mainTableView.reloadData()
+    }
+    
+}
+
+extension MainViewController: UITableViewDelegate, UITableViewDataSource {
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return busList.count
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("busCell", forIndexPath: indexPath) as! BusCell
+        cell.busLabel.text = busList[indexPath.row]
+        return cell
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        self.performSegueWithIdentifier("showDetailSegue", sender: busList[indexPath.row])
+
     }
 }
 
+class BusCell: UITableViewCell {
+    @IBOutlet weak var busLabel: UILabel!
+}

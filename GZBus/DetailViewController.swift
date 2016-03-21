@@ -10,13 +10,12 @@ import UIKit
 import SwiftyJSON
 
 class DetailViewController: UIViewController {
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var indicatorView: UIActivityIndicatorView!
     @IBOutlet weak var stationTableView: UITableView!
-    @IBOutlet weak var segmentedControl: UISegmentedControl!
     
-    private var busStation = [String]()
-    private var busLocation = [Int: Bool]()
-    
+    private var stationList = Station().stationList
+    private var locationList = Station().flagSubway
+
     var route: String!
     private let http = HTTPUtils()
     private let refreshControl = UIRefreshControl()
@@ -26,36 +25,30 @@ class DetailViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.title = route
-        self.segmentedControl.tintColor = UIColor(Hex: ColorUtil.navigationBar)
-        self.segmentedControl.setTitle("上行", forSegmentAtIndex: 0)
-        self.segmentedControl.setTitle("下行", forSegmentAtIndex: 1)
-
+        UISetting()
         
         http.delegate = self
         getData()
     }
     
-    @IBAction func changeDir(sender: AnyObject) {
-        let segmentControl = sender as! UISegmentedControl
-        switch segmentControl.selectedSegmentIndex {
-        case 0:
-            dir = 0
-            getData()
-            return
-        case 1:
-            dir = 1
-            getData()
-            return
-        default: break
-        }
+    func UISetting() {
+        self.title = route
+        stationList = []
+        locationList = []
+        setPullToRefresh()
+        self.automaticallyAdjustsScrollViewInsets = false
     }
-    
+
+    @IBAction func onChangeDirClick(sender: AnyObject) {
+        dir = (dir == 0) ? 1 : 0
+        getData()
+    }
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
+
     func setPullToRefresh() {
         self.refreshControl.attributedTitle = NSAttributedString(string: "下拉刷新")
         self.refreshControl.addTarget(self, action: "refresh", forControlEvents: .ValueChanged)
@@ -66,11 +59,9 @@ class DetailViewController: UIViewController {
         getData()
         self.refreshControl.endRefreshing()
     }
-    
-    func getData() {
-        activityIndicator.hidden = false
-        activityIndicator.startAnimating()
 
+    func getData() {
+        startAnimating()
         let parameters: [String: AnyObject] = [
             "oper":"detail",
             "route": route,
@@ -78,50 +69,51 @@ class DetailViewController: UIViewController {
         ]
         http.get(parameters)
     }
-
-}
-
-extension DetailViewController: HTTPDelegate {
-    func didReceiveError(error: NSError) {
-        stopAnimating()
-        alert("网络连接错误", message: error.localizedDescription, handle: nil)
+    
+    func startAnimating() {
+        indicatorView.hidden = false
+        indicatorView.startAnimating()
     }
     
-    func didReceiveResult(result: NSData) {
-        stopAnimating()
-        let json = JSON(data: result)
-        let back: (UIAlertAction) -> Void = { _ in
-            self.performSegueWithIdentifier("backToMain", sender: nil)
-        }
-        
-        guard route != "" else {
-            alert("缺少查找关键字", message: nil, handle: back)
-            return
-        }
-        
-        guard json["c"].int == 0 else {
-            let title = json["err"]["msg"].stringValue
-            alert(title, message: nil, handle: back)
-            return
-        }
-        self.busStation = json["d"]["busLine"]["stationNames"].stringValue.characters.split(",").map(String.init)
-        print(json["d"]["busTerminal"])
-        self.stationTableView.reloadData()
+    func stopAnimating() {
+        indicatorView.stopAnimating()
+        indicatorView.hidden = true
     }
-    
+
     func alert(title: String, message: String?, handle:  ((UIAlertAction) -> Void)?) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
         let cancelAction = UIAlertAction(title: "确定", style: .Cancel, handler: handle)
         alertController.addAction(cancelAction)
         self.presentViewController(alertController, animated: true, completion: nil)
-        
-    }
-    
-    func stopAnimating() {
-        activityIndicator.stopAnimating()
-        activityIndicator.hidden = true
     }
 
+}
+
+extension DetailViewController: HTTPDelegate {
+    func didReceiveError(error: NSError) {
+        alert("网络连接错误", message: error.localizedDescription, handle: nil)
+    }
+    
+    func didReceiveResult(result: NSData) {
+        let json = JSON(data: result)
+        
+        guard route != "" else {
+            alert("缺少查找关键字", message: nil, handle: nil)
+            return
+        }
+        
+        guard json["c"].int == 0 else {
+            let title = json["err"]["msg"].stringValue
+            alert(title, message: nil, handle: nil)
+            return
+        }
+        
+        stationList = json["d"]["busLine"]["stationNames"].stringValue.characters.split(",").map(String.init)
+        locationList = json["d"]["busLine"]["flagSubway"].stringValue.characters.split(",").map(String.init)
+        stopAnimating()
+        self.stationTableView.reloadData()
+    }
+    
 }
 
 extension DetailViewController: UITableViewDataSource, UITableViewDelegate{
@@ -130,25 +122,21 @@ extension DetailViewController: UITableViewDataSource, UITableViewDelegate{
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return busStation.count
+        return stationList.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("stationCell", forIndexPath: indexPath) as! StationCell
-        cell.stationLabel.text = busStation[indexPath.row]
+        cell.stationLabel.text = stationList[indexPath.row]
+        if locationList[indexPath.row] == "1" {
+            cell.locationLabel.hidden = false
+        }
         return cell
-    }
-    
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 60
     }
 }
 
 class StationCell: UITableViewCell {
     @IBOutlet weak var stationLabel: UILabel!
-    @IBOutlet weak var busImage: UIImageView!
-    
-    override func awakeFromNib() {
-        self.stationLabel.textColor = UIColor(Hex: ColorUtil.station)
-    }
+    @IBOutlet weak var locationLabel: UILabel!
+
 }
