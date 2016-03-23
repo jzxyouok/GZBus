@@ -1,0 +1,24 @@
+
+/* Class = "UILabel"; text = "🚌"; ObjectID = "10w-3B-dkt"; */
+"10w-3B-dkt.text" = "🚌";
+
+/* Class = "UILabel"; text = "547路"; ObjectID = "D4R-EL-hJs"; */
+"D4R-EL-hJs.text" = "bus";
+
+/* Class = "UIViewController"; title = "Main"; ObjectID = "ERE-kk-a9p"; */
+"ERE-kk-a9p.title" = "Main";
+
+/* Class = "UINavigationController"; title = "Root"; ObjectID = "Pgp-qh-mLL"; */
+"Pgp-qh-mLL.title" = "Root";
+
+/* Class = "UINavigationItem"; title = "Title"; ObjectID = "ZVI-My-Y86"; */
+"ZVI-My-Y86.title" = "Title";
+
+/* Class = "UINavigationItem"; title = "巴士来嘅"; ObjectID = "a1t-5o-7HR"; */
+"a1t-5o-7HR.title" = "GZBus";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "nWi-Ji-xaT"; */
+"nWi-Ji-xaT.text" = "Label";
+
+/* Class = "UIViewController"; title = "Detail"; ObjectID = "sFk-EG-yXy"; */
+"sFk-EG-yXy.title" = "Detail";

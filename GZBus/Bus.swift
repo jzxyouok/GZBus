@@ -7,7 +7,22 @@
 //
 
 import Foundation
+import ObjectMapper
 
-class Bus {
-    var busList: [String]!
+class Bus: Mappable {
+    var code: Int!
+    var busString: String?
+    var errorMessage: String?
+    
+    required init?(_ map: Map) {
+        
+    }
+    
+    func mapping(map: Map) {
+        busString <- map["d.result"]
+        code <- map["c"]
+        errorMessage <- map["err.msg"]
+    }
+    
 }
+

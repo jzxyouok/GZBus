@@ -7,8 +7,30 @@
 //
 
 import Foundation
+import ObjectMapper
 
-class Station {
-    var flagSubway:[String]!
-    var stationList: [String]!
+typealias Location = [String: Int]
+
+class Station:Mappable {
+    var code: Int!
+    var errorMessage: String?
+    var lineName: String?
+    var stationName: String?
+    var startPlatName :String?
+    var endPlatName: String?
+    var busLocation: [Location]?
+    
+    required init?(_ map: Map) {
+        
+    }
+    
+    func mapping(map: Map) {
+        code <- map["c"]
+        errorMessage <- map["err.msg"]
+        lineName <- map["d.busLine.lineName"]
+        stationName <- map["d.busLine.stationNames"]
+        startPlatName <- map["d.busLine.strPlatName"]
+        endPlatName <- map["d.busLine.endPlatName"]
+        busLocation <- map["d.busTerminal"]
+    }
 }

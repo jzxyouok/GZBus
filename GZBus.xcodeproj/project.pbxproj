@@ -18,6 +18,7 @@
 		7EF581201C894905005CA17C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF5811F1C894905005CA17C /* AppDelegate.swift */; };
 		7EF581251C894905005CA17C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7EF581231C894905005CA17C /* Main.storyboard */; };
 		7EF5812A1C894905005CA17C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7EF581281C894905005CA17C /* LaunchScreen.storyboard */; };
+		7EFF81301CA16FAC007AB255 /* ObjectMapperUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EFF812F1CA16FAC007AB255 /* ObjectMapperUtil.swift */; };
 		A4B37B2A0E05DECA264E6A64 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 933E0CCD9FDDFD413AE744CC /* Pods.framework */; };
 /* End PBXBuildFile section */
 
@@ -49,6 +50,9 @@
 		7EF581241C894905005CA17C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		7EF581291C894905005CA17C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7EF5812B1C894905005CA17C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7EFF812D1CA169A7007AB255 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
+		7EFF812E1CA169A7007AB255 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		7EFF812F1CA16FAC007AB255 /* ObjectMapperUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectMapperUtil.swift; sourceTree = "<group>"; };
 		847760A111FE14551E1FC00D /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		933E0CCD9FDDFD413AE744CC /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD2512277FA37CC9486594F1 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
@@ -77,6 +81,7 @@
 			isa = PBXGroup;
 			children = (
 				7E09A6B71C8A8C8400F89B84 /* ColorUtil.swift */,
+				7EFF812F1CA16FAC007AB255 /* ObjectMapperUtil.swift */,
 				7E8F706B1C8AF25400F88E99 /* HTTPUtils.swift */,
 			);
 			name = Utils;
@@ -345,6 +350,7 @@
 				7EC5CC2D1C9FB85D00789264 /* Bus.swift in Sources */,
 				7E8F706C1C8AF25400F88E99 /* HTTPUtils.swift in Sources */,
 				7E09A6BA1C8A952F00F89B84 /* MainViewController.swift in Sources */,
+				7EFF81301CA16FAC007AB255 /* ObjectMapperUtil.swift in Sources */,
 				7EF581201C894905005CA17C /* AppDelegate.swift in Sources */,
 				7E8F70771C8B210500F88E99 /* DetailViewController.swift in Sources */,
 				7E09A6B81C8A8C8400F89B84 /* ColorUtil.swift in Sources */,
@@ -368,6 +374,7 @@
 			children = (
 				7EF581241C894905005CA17C /* Base */,
 				7EDA8AFC1C947054000DE6D5 /* zh-Hans */,
+				7EFF812D1CA169A7007AB255 /* en */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -377,6 +384,7 @@
 			children = (
 				7EF581291C894905005CA17C /* Base */,
 				7EDA8AFD1C947054000DE6D5 /* zh-Hans */,
+				7EFF812E1CA169A7007AB255 /* en */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";

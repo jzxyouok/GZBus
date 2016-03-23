@@ -8,6 +8,7 @@
 
 import UIKit
 import SwiftyJSON
+import ObjectMapper
 
 class MainViewController: UIViewController {
     @IBOutlet weak var searchBar: UISearchBar!
@@ -15,7 +16,7 @@ class MainViewController: UIViewController {
     @IBOutlet weak var mainTableView: UITableView!
     
     private var http = HTTPUtils()
-    private var busList = Bus().busList
+    private var busList: [String]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,6 +70,7 @@ class MainViewController: UIViewController {
         let cancelAction = UIAlertAction(title: "确定", style: .Cancel, handler: handle)
         alertController.addAction(cancelAction)
         self.presentViewController(alertController, animated: true, completion: nil)
+        stopAnimating()
     }
 }
 
@@ -98,26 +100,24 @@ extension MainViewController: UISearchBarDelegate {
 
 extension MainViewController: HTTPDelegate {
     func didReceiveError(error: NSError) {
-        stopAnimating()
         alert("网络连接错误", message: error.localizedDescription, handle: nil)
     }
     
     func didReceiveResult(result: NSData) {
         stopAnimating()
+      
         let json = JSON(data: result)
+        let jsonString = String(json)
         
-        guard searchBar.text != "" else {
-            alert("缺少查找关键字", message: nil, handle: nil)
-            return
+        if let bus = Mapper<Bus>().map(jsonString) {
+            
+            guard bus.code == 0 else {
+                let title = bus.errorMessage!
+                alert(title, message: nil, handle: nil)
+                return
+            }
+            busList = bus.busString!.characters.split(",").map(String.init)
         }
-        
-        guard json["c"].int == 0 else {
-            let title = json["err"]["msg"].stringValue
-            alert(title, message: nil, handle: nil)
-            return
-        }
-        
-        busList = json["d"]["result"].stringValue.characters.split(",").map(String.init)
         self.mainTableView.reloadData()
     }
     
