@@ -27,7 +27,7 @@ class MainViewController: UIViewController {
     }
     
     func UISetting() {
-        self.title = "巴士来嘅"
+        self.title = "广州巴士"
         indicatorView.hidden = true
         busList = []
     }

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		7E09A6B81C8A8C8400F89B84 /* ColorUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E09A6B71C8A8C8400F89B84 /* ColorUtil.swift */; };
 		7E09A6BA1C8A952F00F89B84 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E09A6B91C8A952F00F89B84 /* MainViewController.swift */; };
+		7E3F12201CC7DAA300D08AD4 /* MetroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E3F121F1CC7DAA300D08AD4 /* MetroViewController.swift */; };
 		7E8F706C1C8AF25400F88E99 /* HTTPUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8F706B1C8AF25400F88E99 /* HTTPUtils.swift */; };
 		7E8F70771C8B210500F88E99 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8F70761C8B210500F88E99 /* DetailViewController.swift */; };
 		7EADF21F1C9FDD9C00D07202 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7EADF21E1C9FDD9C00D07202 /* Assets.xcassets */; };
@@ -35,6 +36,7 @@
 /* Begin PBXFileReference section */
 		7E09A6B71C8A8C8400F89B84 /* ColorUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorUtil.swift; sourceTree = "<group>"; };
 		7E09A6B91C8A952F00F89B84 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		7E3F121F1CC7DAA300D08AD4 /* MetroViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetroViewController.swift; sourceTree = "<group>"; };
 		7E8F706B1C8AF25400F88E99 /* HTTPUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPUtils.swift; sourceTree = "<group>"; };
 		7E8F70761C8B210500F88E99 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		7EADF21E1C9FDD9C00D07202 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -92,6 +94,7 @@
 			children = (
 				7E09A6B91C8A952F00F89B84 /* MainViewController.swift */,
 				7E8F70761C8B210500F88E99 /* DetailViewController.swift */,
+				7E3F121F1CC7DAA300D08AD4 /* MetroViewController.swift */,
 			);
 			name = Control;
 			sourceTree = "<group>";
@@ -351,6 +354,7 @@
 				7E8F706C1C8AF25400F88E99 /* HTTPUtils.swift in Sources */,
 				7E09A6BA1C8A952F00F89B84 /* MainViewController.swift in Sources */,
 				7EFF81301CA16FAC007AB255 /* ObjectMapperUtil.swift in Sources */,
+				7E3F12201CC7DAA300D08AD4 /* MetroViewController.swift in Sources */,
 				7EF581201C894905005CA17C /* AppDelegate.swift in Sources */,
 				7E8F70771C8B210500F88E99 /* DetailViewController.swift in Sources */,
 				7E09A6B81C8A8C8400F89B84 /* ColorUtil.swift in Sources */,
